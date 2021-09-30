@@ -44,10 +44,11 @@ plot(ff1,P1)
 title('FFT of MATLAB crash')
 xlabel('f (kHz)')
 ylabel('Amplitude')
+% there 
 
 %% Making a Spectrogram of the Data
 figure(3)
-spectrogram(n1,window)
-xlabel('')
-ylabel('')
+spectrogram(n1(:,1))
+xlabel('Samples')
+ylabel('Normalized Frequency')
 title('Spectrogram of MATLAB crash')
