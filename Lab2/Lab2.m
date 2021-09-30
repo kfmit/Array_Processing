@@ -11,17 +11,18 @@ filename1 = 'matlab_crash.wav';
 [n1,f1] = audioread(filename1);
 info1 = audioinfo(filename1);
 Fs = info1.SampleRate
-%% Processing
+%% Time Processing
 t1 = 0:seconds(1/f1):seconds(info1.Duration);
 t1 = t1(1:end-1);
 
 %% Apparently i have two channels? idk
 figure(1)
-plot(t1,n1)
+plot(t1,n1(:,1))
 title('MATLAB keeps crashing')
 xlabel('Time')
 ylabel('Audio, idk Units')
 legend('Channel 1', 'Channel 2')
+hline(0)
 % for playback:  sound(n1,f1)
 
 %% Plot freq
@@ -50,5 +51,15 @@ ylabel('Amplitude')
 figure(3)
 spectrogram(n1(:,1))
 xlabel('Samples')
-ylabel('Normalized Frequency')
-title('Spectrogram of MATLAB crash')
+ylabel('Normalized Frequency \pi radians/sample')
+title('Spectrogram of MATLAB crash Audio')
+
+Nx = length(n1);
+nsc = floor(Nx/4.5);
+nov = floor(nsc/2);
+nff = max(256,2^nextpow2(nsc));
+
+figure(4)
+t = spectrogram(x,hamming(nsc),nov,nff);
+
+maxerr = max(abs(abs(t(:))-abs(s(:))))
