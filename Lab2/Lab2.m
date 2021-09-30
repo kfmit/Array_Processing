@@ -2,7 +2,7 @@
 %% Lab 2
 %% Kathryn Fung
 
-clear
+clear all
 close all
 clc
 
@@ -78,7 +78,7 @@ ylabel('Samples')
 
 
 %% Lab 2 Part 2-----------------------------------------------------------------------------------
-% clear
+clear all
 close all
 clc
 
@@ -126,22 +126,24 @@ ylabel('Amplitude')
 
 %% Making a Spectrogram of the Data, Rough, my try
 figure(3)
-spectrogram(n1(:,1))
+spectrogram(n1)
 title('Spectrogram of Phone Tone')
 %xlim([0 flim])
 
-%
+%%
 Nx = length(n1);
 nsc = floor(Nx/4.5);
 nov = floor(0.75*nsc);
 nff = max(256,2^nextpow2(nsc));
 
 figure(4)
-[s, f,t] = spectrogram(n1(:,1),hamming(nsc),nov,nff, Fs);
+[s,f,t] = spectrogram(n1(:,1),hamming(nsc),nov,nff, Fs);
 imagesc(t,f,log(abs(s)))
 h = colorbar;
 set(get(h,'label'),'string','dB no ref');
 axis xy
-title('Spectrogram of I love AP')
-xlabel('Actual f (kHz)')
-ylabel('Samples')
+title('Spectrogram of Phone Tone')
+ylabel('Actual f (Hz)')
+xlabel('Seconds')
+
+%% 
