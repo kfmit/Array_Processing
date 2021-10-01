@@ -146,4 +146,8 @@ title('Spectrogram of Phone Tone')
 ylabel('Actual f (Hz)')
 xlabel('Seconds')
 
-%% 
+%% Signal Decimation
+s = n1;
+s_new1 = s(1:N:end);
+s_new2 = decimate(s, N);
+
