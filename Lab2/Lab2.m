@@ -116,7 +116,7 @@ ff1 = (0:length(n1)-1)*Fs/length(n1);
 
 % FFT figure
 % this looks wrong, will have to check
-figure(5)
+figure(2)
 plot(ff1,abs(fft1))
 xlim([0 Fs/2])
 title('FFT of Phone Tone')
@@ -146,8 +146,90 @@ title('Spectrogram of Phone Tone')
 ylabel('Actual f (Hz)')
 xlabel('Seconds')
 
-%% Signal Decimation
+
+
+%% Signal Decimation --------------------------------------------------------------------------
 s = n1;
+N = 49; %which is one more than 880
+fs_new = round(Fs/N);
 s_new1 = s(1:N:end);
 s_new2 = decimate(s, N);
+t1_new1=(0:length(s_new1)-1)/N;
+t1_new2=(0:length(s_new2)-1)/N;
+figure(6)
+plot(t1_new1,s_new1)
+hold on
+plot(t1_new2,s_new2)
+legend('Manual Decimate', 'Decimate Function')
+xlabel('Time')
+ylabel('Amplitude')
+title('Time Series of Decimated Signal')
+
+%% Decimated freq
+fft1 = fft(s_new1);
+fft2 = fft(s_new2);
+
+ff1 = (0:length(s_new1)-1)*fs_new/length(s_new1);
+ff2 = (0:length(s_new2)-1)*fs_new/length(s_new2);
+%ff1 =ff1/1000;
+
+% FFT figure
+% this looks wrong, will have to check
+figure(2)
+plot(ff1,abs(fft1))
+hold on
+plot(ff2,abs(fft2))
+xlim([0 Fs/2])
+legend('Manual Decimate', 'Decimate Function')
+title('FFT of Decimated Phone Tone')
+xlabel('f (Hz)')
+ylabel('Amplitude')
+% there 
+
+%% Decimated Spec
+
+figure(3)
+subplot(1,2,1)
+spectrogram(s_new1)
+title('Spectrogram of Manually Decimated Phone Tone')
+pbaspect([1 1 1])
+
+%xlim([0 flim])
+
+subplot(1,2,2)
+spectrogram(s_new2)
+title('Spectrogram of MATLAB Decimated Phone Tone')
+pbaspect([1 1 1])
+%%
+Nx = length(s_new1);
+nsc = floor(Nx/4.5);
+nov = floor(0.75*nsc);
+nff = max(256,2^nextpow2(nsc));
+
+figure(4)
+[s1,f1,t1] = spectrogram(s_new1,hamming(nsc),nov,nff, Fs);
+imagesc(t1,f1,log(abs(s1)))
+h = colorbar;
+set(get(h,'label'),'string','dB no ref');
+axis xy
+title('Spectrogram of Manual Decimated Phone Tone')
+ylabel('Actual f (Hz)')
+xlabel('Seconds')
+
+%% FOR MATLAB
+% FUNCTION--------------------------------------------------------
+Nx = length(s_new2);
+nsc = floor(Nx/4.5);
+nov = floor(0.75*nsc);
+nff = max(256,2^nextpow2(nsc));
+
+figure(5)
+[s2,f2,t2] = spectrogram(s_new2,hamming(nsc),nov,nff, Fs);
+imagesc(t2,f2,log(abs(s2)))
+h = colorbar;
+set(get(h,'label'),'string','dB no ref');
+axis xy
+title('Spectrogram of MATLAB Decimated Phone Tone')
+ylabel('Actual f (Hz)')
+xlabel('Seconds')
 
