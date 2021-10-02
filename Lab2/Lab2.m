@@ -154,8 +154,9 @@ N = 49; %which is one more than 880
 fs_new = round(Fs/N);
 s_new1 = s(1:N:end);
 s_new2 = decimate(s, N);
-t1_new1=(0:length(s_new1)-1)/N;
-t1_new2=(0:length(s_new2)-1)/N;
+
+t1_new1=(0:length(s_new1)-1)/fs_new;
+t1_new2=(0:length(s_new2)-1)/fs_new;
 figure(6)
 plot(t1_new1,s_new1)
 hold on
@@ -174,7 +175,6 @@ ff2 = (0:length(s_new2)-1)*fs_new/length(s_new2);
 %ff1 =ff1/1000;
 
 % FFT figure
-% this looks wrong, will have to check
 figure(2)
 plot(ff1,abs(fft1))
 hold on
@@ -186,7 +186,7 @@ xlabel('f (Hz)')
 ylabel('Amplitude')
 % there 
 
-%% Decimated Spec
+%% Decimated Spec MANUAL
 
 figure(3)
 subplot(1,2,1)
@@ -200,7 +200,7 @@ subplot(1,2,2)
 spectrogram(s_new2)
 title('Spectrogram of MATLAB Decimated Phone Tone')
 pbaspect([1 1 1])
-%%
+%% MATLAB Decimated Spec
 Nx = length(s_new1);
 nsc = floor(Nx/4.5);
 nov = floor(0.75*nsc);
@@ -233,3 +233,21 @@ title('Spectrogram of MATLAB Decimated Phone Tone')
 ylabel('Actual f (Hz)')
 xlabel('Seconds')
 
+%% Decimation part 2----------------------------------------------------------------------
+
+s = n1;
+N = 51; %which is one more than 880
+fs_new = round(Fs/N);
+s_new1 = s(1:N:end);
+s_new2 = decimate(s, N);
+
+t1_new1=(0:length(s_new1)-1)/fs_new;
+t1_new2=(0:length(s_new2)-1)/fs_new;
+figure(6)
+plot(t1_new1,s_new1)
+hold on
+plot(t1_new2,s_new2)
+legend('Manual Decimate', 'Decimate Function')
+xlabel('Time')
+ylabel('Amplitude')
+title('Time Series of Decimated Signal')
