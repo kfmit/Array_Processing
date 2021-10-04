@@ -176,12 +176,17 @@ ff2 = (0:length(s_new2)-1)*fs_new/length(s_new2);
 
 % FFT figure
 figure(2)
+subplot(1,2,1)
 plot(ff1,abs(fft1))
-hold on
+title('FFT of Manually Decimated Phone Tone')
+xlabel('f (Hz)')
+ylabel('Amplitude')
+xlim([0 Fs/2])
+
+subplot(1,2,2)
 plot(ff2,abs(fft2))
 xlim([0 Fs/2])
-legend('Manual Decimate', 'Decimate Function')
-title('FFT of Decimated Phone Tone')
+title('FFT of MATLAB Decimated Phone Tone')
 xlabel('f (Hz)')
 ylabel('Amplitude')
 % there 
@@ -236,7 +241,7 @@ xlabel('Seconds')
 %% Decimation part 2----------------------------------------------------------------------
 
 s = n1;
-N = 51; %which is one more than 880
+N = 60; %which is one more than 880
 fs_new = round(Fs/N);
 s_new1 = s(1:N:end);
 s_new2 = decimate(s, N);
@@ -250,4 +255,44 @@ plot(t1_new2,s_new2)
 legend('Manual Decimate', 'Decimate Function')
 xlabel('Time')
 ylabel('Amplitude')
-title('Time Series of Decimated Signal')
+title(['Time Series of Decimated Signal N=' num2str(N)])
+
+%% Decimation FFT
+fft1 = fft(s_new1);
+fft2 = fft(s_new2);
+
+ff1 = (0:length(s_new1)-1)*fs_new/length(s_new1);
+ff2 = (0:length(s_new2)-1)*fs_new/length(s_new2);
+%ff1 =ff1/1000;
+
+% FFT figure
+figure(2)
+subplot(1,2,1)
+plot(ff1,abs(fft1))
+title(['FFT of N=' num2str(N) ' Manually Decimated Phone Tone'])
+xlabel('f (Hz)')
+ylabel('Amplitude')
+xlim([0 fs_new])
+
+subplot(1,2,2)
+plot(ff2,abs(fft2))
+xlim([0 fs_new])
+title(['FFT of N=' num2str(N) 'MATLAB Decimated Phone Tone'])
+xlabel('f (Hz)')
+ylabel('Amplitude')
+
+%% Test Spectrogram
+Nx = length(s_new2);
+nsc = floor(Nx/4.5);
+nov = floor(0.75*nsc);
+nff = max(256,2^nextpow2(nsc));
+
+figure(5)
+[s2,f2,t2] = spectrogram(s_new2,hamming(nsc),nov,nff, Fs);
+imagesc(t2,f2,log(abs(s2)))
+h = colorbar;
+set(get(h,'label'),'string','dB no ref');
+axis xy
+title('Spectrogram of MATLAB Decimated Phone Tone')
+ylabel('Actual f (Hz)')
+xlabel('Seconds')
