@@ -55,10 +55,10 @@ hold on
 plot(f_per1,psd_s1)
 
 
-% plot(f_per2,ps_s2,'d')
-% hold on
-% plot(f_per2,psd_s2,'LineWidth',3)
-% plot(f_per2,ps_s2)
+plot(f_per2,ps_s2,'d')
+hold on
+plot(f_per2,psd_s2,'LineWidth',3)
+plot(f_per2,ps_s2)
 xlabel('Frequency')
 ylabel('Power/frequency (dB/(rad/sample))')
 title('Periodogram Power Spectrum and Power Density Estimate')
