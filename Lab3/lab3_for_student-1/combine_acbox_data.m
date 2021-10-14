@@ -20,8 +20,8 @@ length(files)
 %startnum=6800;
 % the number of the last file you want to process (e.g. 1000)
 %endnum=7800;
-startnum=46;
-endnum=56;
+startnum=63;
+endnum=75;
 if endnum>length(files)
     endnum=length(files);
 end
