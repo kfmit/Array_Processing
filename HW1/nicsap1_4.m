@@ -38,7 +38,7 @@ psi = [-1:0.01:1]*pi;
 v2 = exp(j*D2*psi);
 B2 = w2'*v2;
 
-
+% power: 10*log10(abs(
 h1 = plot(u,uniform);
 hold on
 h2 = plot(u,(triang)/max(abs(triang)));

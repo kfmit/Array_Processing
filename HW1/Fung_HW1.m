@@ -43,6 +43,7 @@ theta = [0:0.01:pi];        % vecotr of thetas from 0 to pi
 psi = [-1:0.01:1]*pi;       % vector of psis from -pi to pi
 
 v_psi = exp(1i*D*psi);           % vector of vs e^j*D*psi
+% CHECK ON THIS
 v_theta = exp(1i*D*cos(theta));           % vector of vs e^j*D*theta DO I NEED COS OR NOT
 
 B_psi = w*v_psi;                   % weights times vector v

@@ -10,6 +10,7 @@ clc
 N=7;                        % Number of elements
 D=[-(N-1)/2:1:(N-1)/2].';   % Distance, column vector
 w = [ones(N,1)]/N;          % weight of 1/N (1/7), unifrom
+w_tri=triang(N);
 
 psi = [-1:0.01:1]*pi;       % vector of psis from -pi to pi
 v = exp(j*D*psi);           % ve cot of vs e^j*D*psi
