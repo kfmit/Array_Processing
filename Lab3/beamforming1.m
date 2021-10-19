@@ -94,8 +94,8 @@ if ~iscolumn(p_)
 end
 
 % Methods 1 and 2: t is created by the spectrogram function (its time, duh)
-y=zeros(length(t), Ntheta);     % one straight up equation for y
-y2=zeros(length(t), Ntheta);    % multiple equtaions make up this one
+y=zeros(length(t), Ntheta);     % one straight up equation for y, in THETA SPACE
+y2=zeros(length(t), Ntheta);    % multiple equtaions make up this one: function of PHI
 
 for tt=1:length(t)
 	s=transpose(data_ok(tt,:)); %%% this is a column vector
