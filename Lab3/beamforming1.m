@@ -29,6 +29,8 @@ c=1525; %%% water sound speed (NEEDS TO BE ADJUSTED???)
 p_inches=[0 7.5 13 22 29.5 37 44.25 51.5];  % absolute value of the hydrophone locations
 p_=p_inches/39.37;                          % convert from inchies to meters
 
+p_rand = [0 15 18.5 22 33.25 37 40 51.5];
+p_rand = p_rand/39.37;
 
 %% Build frequency domain data before beamforming
 
@@ -116,10 +118,17 @@ end
 % 	For snapshot
 % 		beamform
 
-figure,
+figure(2)
 plot(theta,abs(y(1,:)))
 hold on
 plot(theta, abs(y2(1,:)),'d')
 grid on
 xlim([theta(1) theta(end)])
+title('Beampattern of Dock Data Smples Broadside')
+xlabel('Angle (degrees)')
+ylabel('Amplitude (Abs)')
+legend('Beamform \Theta','Beamform k')
 
+%%
+figure(3)
+subplot(
